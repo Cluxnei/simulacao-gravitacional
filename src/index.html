@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simulação Gravitacional</title>
+    <script defer src="../node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
+    <script defer src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
+    <script src="../dist/bundle.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #simulacao {
+            z-index: 1;
+        }
+
+        #painel-de-controle {
+            z-index: 2;
+            width: 20%;
+            height: calc(100% - 20px);
+            background-color: rgba(45, 45, 45, 0.7);
+            position: fixed;
+            right: 10px;
+            top: 10px;
+            padding: 10px 0;
+            color: white;
+        }
+
+        #planetas {
+            overflow: auto;
+            display: flex;
+            height: 50vh;
+            flex-wrap: wrap;
+        }
+
+        #painel-de-controle span {
+            margin: 5px 0;
+        }
+
+        #planetas div[data-id-planeta] {
+            display: flex;
+            flex-direction: column;
+            background-color: #2a2a2a;
+            padding: 10px;
+            transition: background-color 300ms ease-in-out;
+            flex: 1 1 auto;
+            width: 100%;
+        }
+
+        #planetas div:nth-child(odd) {
+            background-color: rgba(56, 52, 52, 0.7);
+        }
+
+        #planetas .ativo {
+            background-color: rgba(64, 0, 0, 0.7) !important;
+        }
+
+        .botoes {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .observar-planeta, .mostrar-orbita {
+            padding: 10px 0;
+            background-color: black;
+            color: white;
+            border: none;
+            outline: none;
+            transition: all 300ms ease-in-out;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .observar-planeta {
+            margin-right: 5px;
+        }
+
+        .observar-planeta[disabled], .mostrar-orbita[disabled] {
+            cursor: not-allowed;
+            text-decoration: line-through;
+            background-color: #580404;
+        }
+
+        #informacoes {
+            padding: 10px 15px;
+        }
+
+        #controles {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #pausar, #retardar, #acelerar {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="painel-de-controle">
+    <div id="controles">
+        <button id="retardar">
+            <i class="fas fa-3x fa-chevron-left"></i>
+        </button>
+        <button id="pausar">
+            <i class="fas fa-3x fa-pause"></i>
+        </button>
+        <button id="acelerar">
+            <i class="fas fa-3x fa-chevron-right"></i>
+        </button>
+    </div>
+    <div id="informacoes">
+        <span>Coeficiente limitador de tempo: <span id="diferenca-de-tempo">0</span></span>
+        <br>
+        <span>Tempo corrido: <span id="tempo">0</span> segundos</span>
+        <br>
+        <span>Zoom: <span id="zoom">0</span></span>
+        <br>
+        <span>Número de planetas: <span id="numero-de-planetas">0</span></span>
+        <br>
+        <span>Posição: <span id="posicao">[0, 0]</span></span>
+    </div>
+    <span style="padding-left: 10px;">Planetas:</span>
+    <div id="planetas"></div>
+</div>
+<canvas id="simulacao"></canvas>
+</body>
+</html>
